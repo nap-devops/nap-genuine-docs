@@ -128,13 +128,13 @@ function Form() {
     const [lotNoList, setLotNoList] = useState([]);
 
     useEffect(() => {
-        fetch("api/products")
+        fetch("v1/api/products")
             .then((res) => res.json())
             .then((data) => setProductList(data));
     }, [])
 
     useEffect(() => {
-        fetch("api/lot_nos")
+        fetch("/v1/api/lotnos")
             .then((res) => res.json())
             .then((data) => setLotNoList(data));
     }, [])
