@@ -1,0 +1,49 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "description": "Black-Galingale",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 2,
+            "description": "Black-Ginger",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 3,
+            "description": "Black-Galingale",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 4,
+            "description": "Butterfly-Pea",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 5,
+            "description": "Coffee",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 6,
+            "description": "Ginger",
+            "category": "FG",
+            "type": "Extracts"
+        },
+        {
+            "id": 7,
+            "description": "Happy-Yellow-Karee",
+            "category": "FG",
+            "type": "Extracts"
+        }
+    ],
+    "total": 5,
+    "skip": 0,
+    "limit": 5
+}
