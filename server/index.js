@@ -109,9 +109,33 @@ app.post('/v1/api/search/', (req, res) => {
 
     console.log(req.body);
 
-    res.setHeader('Content-Type', 'application/json');
-    res.writeHead(200);
-    res.end(JSON.stringify(null, null, 3));
+    if (req.body.product && req.body.lotNo) {
+
+        let fileName = 'napbiotec/coa/FG/Feed/Hydro-Herb-DCP/Hydro Herb DCP lot.2208001.pdf';
+
+        // let fileName = req.params.fileName;
+        // console.log(fileName);
+
+        let filePath = path.join(__dirname, '../..', "/", fileName);
+        console.log(filePath);
+        // fs.readFile(filePath, function (err, data) {
+        //     console.log(data);
+        //     res.contentType('application/pdf');
+        //     res.send(data);
+        // });
+
+        // res.setHeader('Content-Length', file.length);
+        // res.write(file, 'binary');
+        // res.end();
+
+        res.download(filePath); // Set disposition and send it.
+
+    }
+
+
+    // res.setHeader('Content-Type', 'application/json');
+    // res.writeHead(200);
+    // res.end(JSON.stringify(null, null, 3));
 })
 
 app.get('/v1/api/products', (req, res) => {

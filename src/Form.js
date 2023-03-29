@@ -127,7 +127,10 @@ function Form() {
     });
 
     const [productList, setProductList] = useState([]);
+    const [productValue, setProductValue] = useState(0);
+
     const [lotNoList, setLotNoList] = useState([]);
+    const [lotNoValue, setLotNoValue] = useState(0);
 
     const [isLoading, setLoading] = useState(false);
     const [isCOAFound, setCOAFound] = useState(true);
@@ -173,15 +176,28 @@ function Form() {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ product: 'Butterfly-Pea' })
+            body: JSON.stringify({
+                product: productValue,
+                lotNo: lotNoValue
+            })
         }
 
         const response = fetch('/v1/api/search', options)
-            .then((res) => res.json())
-            .then((data) => {
-                setCOAFound(false)
+            .then((response) => response.blob())
+            .then((blob) => {
                 setLoading(false)
-            })
+                const a = document.createElement('a')
+                // a.download = "test123"
+                a.target = "_blank"
+                a.href = window.URL.createObjectURL(blob)
+                const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                })
+                a.dispatchEvent(clickEvent)
+                a.remove()
+            });
     }
 
     const downloadFile = (event) => {
@@ -192,18 +208,37 @@ function Form() {
         // console.log(type);
         // console.log(cat);
         // console.log(doc);
-        setLoading(true);
+        setLoading(true)
+
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ product: 'Butterfly-Pea' })
-        };
-        const response = fetch('/v1/api/search', options)
-            .then((res) => res.json())
-            .then((data) => {
-                setCOAFound(false)
-                setLoading(false)
-            })
+        }
+
+        // const response = fetch('/v1/api/search', options)
+        //     .then((response) => response.blob())
+        //     .then((blob) => {
+        //         const a = document.createElement('a')
+        //         a.download = fileName
+        //         a.href = window.URL.createObjectURL(blob)
+        //         const clickEvent = new MouseEvent('click', {
+        //             view: window,
+        //             bubbles: true,
+        //             cancelable: true,
+        //         })
+        //         a.dispatchEvent(clickEvent)
+        //         a.remove()
+        //     });
+
+
+        // const response = fetch('/v1/api/search', options)
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         setCOAFound(false)
+        //         setLoading(false)
+        //     })
+
 
 
         // try {
@@ -268,14 +303,18 @@ function Form() {
                         <div>
                             {!isCOAFound &&
                                 <Alert key="warning" variant="warning">
-                                    No OCA document found for Marigold Extract A2302001
+                                    No OCA documentfound for Marigold Extract A2302001
                                 </Alert>
                             }
                         </div>
                     </div>
                     <div class="row">
                         <label class="col-form-label">Product Name</label>
-                        <Select styles={customStyles} options={productList} />
+                        <Select
+                            styles={customStyles}
+                            options={productList}
+                            onChange={(choice) => setProductValue(choice.value)}
+                        />
                         {/* <label class="col-sm-3 col-form-label">Product Name</label>
                         <Select styles={customStyles} options={productList} />
                         <div class="col-sm-9">
@@ -284,7 +323,11 @@ function Form() {
                     </div>
                     <div class="row mb-3">
                         <label class="col-form-label">Lot Number</label>
-                        <Select styles={customStyles} options={lotNoList} />
+                        <Select
+                            styles={customStyles}
+                            options={lotNoList}
+                            onChange={(choice) => setLotNoValue(choice.value)}
+                        />
                         {/* <label class="col-sm-3 col-form-label">Lot Number</label>
                         <div class="col-sm-9">
                             <Select styles={customStyles} options={lotNoList} />
