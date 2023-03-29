@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Select from "react-select";
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 const productsData = [
     {
@@ -81,7 +84,6 @@ const catsData = [
 //     { value: "Butterfly-Pea", label: "Butterfly-Pea" },
 //     { value: "Coffee", label: "Coffee" },
 // ];
-// const productList = [];
 
 // const lotNoList = [
 //     { value: "2206001", label: "2206001" },
@@ -127,6 +129,9 @@ function Form() {
     const [productList, setProductList] = useState([]);
     const [lotNoList, setLotNoList] = useState([]);
 
+    const [isLoading, setLoading] = useState(false);
+    const [isCOAFound, setCOAFound] = useState(true);
+
     useEffect(() => {
         fetch("v1/api/products")
             .then((res) => res.json())
@@ -163,11 +168,44 @@ function Form() {
         </option>
     ));
 
-    const downloadFile = async (id, path, mimetype) => {
-        console.log(product);
-        console.log(type);
-        console.log(cat);
-        console.log(doc);
+    const handleClick = () => {
+        setLoading(true)
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ product: 'Butterfly-Pea' })
+        }
+
+        const response = fetch('/v1/api/search', options)
+            .then((res) => res.json())
+            .then((data) => {
+                setCOAFound(false)
+                setLoading(false)
+            })
+    }
+
+    const downloadFile = (event) => {
+
+        event.preventDefault()
+
+        // console.log(product);
+        // console.log(type);
+        // console.log(cat);
+        // console.log(doc);
+        setLoading(true);
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ product: 'Butterfly-Pea' })
+        };
+        const response = fetch('/v1/api/search', options)
+            .then((res) => res.json())
+            .then((data) => {
+                setCOAFound(false)
+                setLoading(false)
+            })
+
+
         // try {
         //     const result = await axios.get(`${API_URL}/download/${id}`, {
         //     responseType: 'blob'
@@ -227,6 +265,15 @@ function Form() {
             <div className="row align-items-center" style={{ height: '80vh' }}>
                 <div className="m-auto w-50">
                     <div class="row">
+                        <div>
+                            {!isCOAFound &&
+                                <Alert key="warning" variant="warning">
+                                    No OCA document found for Marigold Extract A2302001
+                                </Alert>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
                         <label class="col-form-label">Product Name</label>
                         <Select styles={customStyles} options={productList} />
                         {/* <label class="col-sm-3 col-form-label">Product Name</label>
@@ -243,15 +290,22 @@ function Form() {
                             <Select styles={customStyles} options={lotNoList} />
                         </div> */}
                     </div>
-                    <div class="row mb-3">
+                    {/* <div class="row mb-3">
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-default">Submit</button>
                         </div>
-                        {/* <div class="col-sm-3"></div>
+                        <div class="col-sm-3"></div>
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-default">Submit</button>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
+                    <Button
+                        variant="primary"
+                        disabled={isLoading}
+                        onClick={!isLoading ? handleClick : null}
+                    >
+                        {isLoading ? 'Loading…' : 'Submit'}
+                    </Button>
                 </div>
             </div>
         </form>

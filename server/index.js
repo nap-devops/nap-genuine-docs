@@ -90,18 +90,28 @@ app.get('/api/download/:fileName', function (req, res) {
 
 })
 
-app.get('/v1/api/search/:product/:lotNo', (req, res) => {
+// app.get('/v1/api/search/:product/:lotNo', (req, res) => {
 
-    let product = req.params.product;
-    let lotNo = req.params.lotNo;
+//     let product = req.params.product;
+//     let lotNo = req.params.lotNo;
 
-    var result = data.filter(item => {
-        return item.product === product && item.lot_no === lotNo;
-    });
+//     var result = data.filter(item => {
+//         return item.product === product && item.lot_no === lotNo;
+//     });
+
+//     res.setHeader('Content-Type', 'application/json');
+//     res.writeHead(200);
+//     res.end(JSON.stringify(result, null, 3));
+// })
+
+app.post('/v1/api/search/', (req, res) => {
+    //const body = req.body;
+
+    console.log(req.body);
 
     res.setHeader('Content-Type', 'application/json');
     res.writeHead(200);
-    res.end(JSON.stringify(result, null, 3));
+    res.end(JSON.stringify(null, null, 3));
 })
 
 app.get('/v1/api/products', (req, res) => {
