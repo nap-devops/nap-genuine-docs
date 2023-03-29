@@ -135,6 +135,8 @@ function Form() {
     const [isLoading, setLoading] = useState(false);
     const [isCOAFound, setCOAFound] = useState(true);
 
+    const [message, setMessage] = useState('');
+
     useEffect(() => {
         fetch("v1/api/products")
             .then((res) => res.json())
@@ -172,7 +174,9 @@ function Form() {
     ));
 
     const handleClick = () => {
+
         setLoading(true)
+
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -183,21 +187,39 @@ function Form() {
         }
 
         const response = fetch('/v1/api/search', options)
-            .then((response) => response.blob())
-            .then((blob) => {
+            .then((res) => res.json())
+            .then((data) => {
+
                 setLoading(false)
-                const a = document.createElement('a')
-                // a.download = "test123"
-                a.target = "_blank"
-                a.href = window.URL.createObjectURL(blob)
-                const clickEvent = new MouseEvent('click', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true,
-                })
-                a.dispatchEvent(clickEvent)
-                a.remove()
-            });
+
+                console.log(data.length);
+
+                if (data.length > 0) {
+
+                    fetch('/v1/api/download', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ filePath: data[0].file })
+                    })
+                        .then((response) => response.blob())
+                        .then((blob) => {
+                            const a = document.createElement('a')
+                            a.target = '_blank'
+                            a.href = URL.createObjectURL(blob)
+                            const clickEvent = new MouseEvent('click', {
+                                view: window,
+                                bubbles: true,
+                                cancelable: true,
+                            })
+                            a.dispatchEvent(clickEvent)
+                            a.remove()
+                        })
+                } else {
+                    setCOAFound(false);
+                    setMessage(`Not Found COA for ${productValue}, ${lotNoValue}`);
+                }
+            })
+
     }
 
     const downloadFile = (event) => {
@@ -303,7 +325,7 @@ function Form() {
                         <div>
                             {!isCOAFound &&
                                 <Alert key="warning" variant="warning">
-                                    No OCA documentfound for Marigold Extract A2302001
+                                    {message}
                                 </Alert>
                             }
                         </div>
@@ -313,7 +335,10 @@ function Form() {
                         <Select
                             styles={customStyles}
                             options={productList}
-                            onChange={(choice) => setProductValue(choice.value)}
+                            onChange={(choice) => {
+                                setCOAFound(true)
+                                setProductValue(choice.value)
+                            }}
                         />
                         {/* <label class="col-sm-3 col-form-label">Product Name</label>
                         <Select styles={customStyles} options={productList} />
@@ -326,7 +351,10 @@ function Form() {
                         <Select
                             styles={customStyles}
                             options={lotNoList}
-                            onChange={(choice) => setLotNoValue(choice.value)}
+                            onChange={(choice) => {
+                                setCOAFound(true)
+                                setLotNoValue(choice.value)
+                            }}
                         />
                         {/* <label class="col-sm-3 col-form-label">Lot Number</label>
                         <div class="col-sm-9">

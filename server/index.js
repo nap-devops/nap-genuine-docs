@@ -72,7 +72,7 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
 const allFiles = getAllFiles('../napbiotec');
 console.log(allFiles);
 
-app.get('/api/download/:fileName', function (req, res) {
+app.get('/api/download2/:fileName', function (req, res) {
 
     console.log(`${__dirname}`);
     console.log(`${path.join(__dirname, '../..')}`)
@@ -104,20 +104,47 @@ app.get('/api/download/:fileName', function (req, res) {
 //     res.end(JSON.stringify(result, null, 3));
 // })
 
+app.post('/v1/api/download/', function (req, res) {
+    res.download(req.body.filePath);
+})
+
 app.post('/v1/api/search/', (req, res) => {
-    //const body = req.body;
 
     console.log(req.body);
 
     if (req.body.product && req.body.lotNo) {
 
-        let fileName = 'napbiotec/coa/FG/Feed/Hydro-Herb-DCP/Hydro Herb DCP lot.2208001.pdf';
+        let result = data.filter(item => {
+            return item.product === req.body.product && item.lot_no === req.body.lotNo;
+        });
+
+        console.log(result.length);
+        // if (result.length > 0) {
+
+        //     console.log(result);
+
+        //     // let fileName = 'napbiotec/coa/FG/Feed/Hydro-Herb-DCP/Hydro Herb DCP lot.2208001.pdf';
+        //     // let filePath = path.join(__dirname, '../..', "/", fileName);
+        //     // console.log(filePath);
+
+        //     // res.download(result.file);
+        //     res.json({ filePath: result.file, lotNo: 10 });
+        // } else {
+        //     res.json({ filePath: '', message: `Not Found COA for ${req.body.product}, ${req.body.lotNo}` });
+        // }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200);
+        res.end(JSON.stringify(result, null, 3));
+
+
+        // `Hi, I am ${name} and I am ${age} years old. I am from ${country}.`
+        // `napbiotec/coa/FG/Feed/Hydro-Herb-DCP/Hydro Herb DCP lot.${req.body.lotNo}.pdf`
 
         // let fileName = req.params.fileName;
         // console.log(fileName);
 
-        let filePath = path.join(__dirname, '../..', "/", fileName);
-        console.log(filePath);
+
         // fs.readFile(filePath, function (err, data) {
         //     console.log(data);
         //     res.contentType('application/pdf');
@@ -128,7 +155,7 @@ app.post('/v1/api/search/', (req, res) => {
         // res.write(file, 'binary');
         // res.end();
 
-        res.download(filePath); // Set disposition and send it.
+        // Set disposition and send it.
 
     }
 
