@@ -136,17 +136,24 @@ function Form() {
     const [isCOAFound, setCOAFound] = useState(true);
 
     const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         fetch("v1/api/products")
             .then((res) => res.json())
-            .then((data) => setProductList(data));
+            .then((data) => setProductList(data))
+            .catch(error => {
+                setErrorMessage(error.toString())
+            })
     }, [])
 
     useEffect(() => {
         fetch("/v1/api/lotnos")
             .then((res) => res.json())
-            .then((data) => setLotNoList(data));
+            .then((data) => setLotNoList(data))
+            .catch(error => {
+                setErrorMessage(error.toString())
+            })
     }, [])
 
     const products = productsData.map((product) => (
@@ -214,12 +221,18 @@ function Form() {
                             a.dispatchEvent(clickEvent)
                             a.remove()
                         })
+                        .catch(error => {
+                            setErrorMessage(error.toString());
+                        })
                 } else {
                     setCOAFound(false);
                     setMessage(`Not Found COA for ${productValue}, ${lotNoValue}`);
                 }
             })
-
+            .catch(error => {
+                setLoading(false)
+                setMessage(error.toString());
+            })
     }
 
     const downloadFile = (event) => {
@@ -326,6 +339,11 @@ function Form() {
                             {!isCOAFound &&
                                 <Alert key="warning" variant="warning">
                                     {message}
+                                </Alert>
+                            }
+                            {errorMessage &&
+                                <Alert key="danger" variant="danger">
+                                    {errorMessage}
                                 </Alert>
                             }
                         </div>
