@@ -12,4 +12,4 @@ COPY . /usr/app
 
 EXPOSE 3030
 
-CMD ["npm", "run", "start-app"]
+CMD ["npm", "server/index.js"]
