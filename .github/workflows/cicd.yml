@@ -25,7 +25,7 @@ jobs:
       id: deployment
       run: |
         exit 0
-        
+
         export ENVIRONMENT=${{ needs.build1.outputs.autoDeployEnv }}
         export ARGOCD_BRANCH=${{ needs.build1.outputs.autoDeployBranch }}
         export VALUE_FILE_DIR="genuine-common"
@@ -34,11 +34,11 @@ jobs:
         git config --global user.email "cicd-auto@napbiotec.io"
         git config --global user.name "CICD"
 
-        git clone "https://cicd-token:${GH_TOKEN}@github.com/nap-devops/nap-genuine-deployment.git" deployment
+        git clone "https://cicd-token:${GH_TOKEN}@github.com/nap-devops/nap-genuine-docs-deployment.git" deployment
         cd deployment
         git checkout ${ARGOCD_BRANCH}
-        cp ${VALUE_FILE_DIR}/values-template-docs.yaml ${VALUE_FILE}
-        sed -i "s#<<genuine-api-image-tag>>#${IMAGE_TAG1}#g" ${VALUE_FILE}
+        cp ${VALUE_FILE_DIR}/values-template.yaml ${VALUE_FILE}
+        sed -i "s#<<genuine-docs-image-tag>>#${IMAGE_TAG1}#g" ${VALUE_FILE}
         ls -lrt
         cat ${VALUE_FILE}
         git add ${VALUE_FILE}; git commit --m "Update image tag by auto deploy script"; git push
