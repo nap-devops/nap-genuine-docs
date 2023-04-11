@@ -6,6 +6,9 @@ const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.json());
 app.use(express.static(buildPath));
 
+
+//app.use('/static', express.static(join(__dirname, '..', 'src')));
+
 const fs = require('fs');
 
 // fs.readdir('../', { withFileTypes: true }, (error, files) => {
@@ -69,8 +72,15 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
     return arrayOfFiles
 }
 
-const allFiles = getAllFiles('../napbiotec');
+const allFiles = getAllFiles('/data/napbiotec');
 console.log(allFiles);
+
+app.get('/v1/api/checkpath/', function (req, res) {
+    console.log(`${__dirname}`);
+    console.log(`${path.join(__dirname, '../..')}`)
+    console.log(`${path.join(__dirname, '../../..')}`)
+    console.log(`${path.join(__dirname, '../../../..')}`)
+})
 
 app.get('/api/download2/:fileName', function (req, res) {
 
@@ -207,7 +217,7 @@ app.get('/message', (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.listen(3030, () => {
+app.listen(3031, () => {
     console.log('server start on port 3030');
 });
 
