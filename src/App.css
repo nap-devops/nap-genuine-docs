@@ -6,7 +6,25 @@
   --btn-color: #fff;
 }
 
-.App {
+.napbiotec {
+  font-family: "Kanit", Sans-serif;
+  --btn-bg: #284e23;
+  --btn-color: #fff;
+}
+
+.aldamex {
+  font-family: "Prompt", Sans-serif;
+  --btn-bg: #253b90;
+  --btn-color: #fff;
+}
+
+/* body,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+} */
+
+/* .App {
   text-align: center;
 }
 
@@ -19,7 +37,7 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
   min-height: 100vh;
@@ -30,7 +48,7 @@
   /* font-size: calc(10px + 2vmin);*/
 }
 
-.App-link {
+/* .App-link {
   color: #61dafb;
 }
 
@@ -42,7 +60,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 select {
   width: 100%;
