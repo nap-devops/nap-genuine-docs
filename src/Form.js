@@ -390,7 +390,7 @@ function Form() {
                     </div> */}
                     <Button
                         variant="primary"
-                        disabled={isLoading}
+                        disabled={isLoading || !productValue || !lotNoValue}
                         onClick={!isLoading ? handleClick : null}
                     >
                         {isLoading ? 'Loading…' : 'Submit'}
