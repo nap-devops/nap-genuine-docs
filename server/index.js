@@ -215,7 +215,8 @@ app.get('/message', (req, res) => {
 
 app.listen(3030, () => {
     console.log('server start on port 3030');
-    const allFiles = getAllFiles(path.join(__dirname, '../data'));
+    // const allFiles = getAllFiles(path.join(__dirname, '../data'));
+    const allFiles = getAllFiles('../napbiotec');
     console.log("########## List all COA ##########");
     console.log(allFiles);
 });
