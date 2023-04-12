@@ -56,7 +56,7 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
                 //     data.push({ product: product[0], category: category[0], type: type[0], lotno: lotNo[0], file: path.join(__dirname, '../', dirPath, "/", file) });
                 // }
 
-                data.push({ product: product[0], category: category[0], type: type[0], lot_no: lotNo[0], file: path.join(__dirname, '../', dirPath, "/", file) });
+                data.push({ product: product[0], category: category[0], type: type[0], lot_no: lotNo[0], file: '/data/' + dirPath + "/" + file });
 
                 // console.log(lotNo);
                 //console.log(__dirname + " / " + dirPath);
