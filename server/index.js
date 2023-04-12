@@ -72,7 +72,7 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
     return arrayOfFiles
 }
 
-const allFiles = getAllFiles('/data/napbiotec');
+const allFiles = getAllFiles('../napbiotec');
 console.log(allFiles);
 
 app.get('/v1/api/checkpath/', function (req, res) {
@@ -217,7 +217,7 @@ app.get('/message', (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.listen(3031, () => {
+app.listen(3030, () => {
     console.log('server start on port 3030');
 });
 
