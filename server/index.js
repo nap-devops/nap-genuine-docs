@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+require('dotenv').config();
+const org = process.env.ORG || 'napbiotec';
+
 const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.json());
 app.use(express.static(buildPath));
@@ -215,8 +218,9 @@ app.get('/message', (req, res) => {
 
 app.listen(3030, () => {
     console.log('server start on port 3030');
+    console.log("ENV org: " + org);
     //const allFiles = getAllFiles(path.join(__dirname, '../data')); // local
-    const allFiles = getAllFiles('/data/napbiotec');   // remote
+    const allFiles = getAllFiles(`/data/${org}`);   // remote
     console.log("########## List all COA ##########");
     console.log(allFiles);
 });
