@@ -36,7 +36,6 @@ const lotNoList = [];
 
 const getAllFiles = function (dirPath, arrayOfFiles) {
     files = fs.readdirSync(dirPath)
-
     arrayOfFiles = arrayOfFiles || []
 
     files.forEach(function (file) {
@@ -71,9 +70,6 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
 
     return arrayOfFiles
 }
-
-const allFiles = getAllFiles('../napbiotec');
-console.log(allFiles);
 
 app.get('/v1/api/checkpath/', function (req, res) {
     console.log(`${__dirname}`);
@@ -219,6 +215,9 @@ app.get('/message', (req, res) => {
 
 app.listen(3030, () => {
     console.log('server start on port 3030');
+    const allFiles = getAllFiles(path.join(__dirname, '../data'));
+    console.log("########## List all COA ##########");
+    console.log(allFiles);
 });
 
 // const path = require('path');
