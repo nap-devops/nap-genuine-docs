@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import { useTranslation } from 'react-i18next'
 import Select from "react-select";
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -118,6 +119,8 @@ const customStyles = {
 
 
 function Form() {
+
+    const { t } = useTranslation();
 
     const [{ product, type, cat, doc }, setData] = useState({
         product: "",
@@ -349,7 +352,7 @@ function Form() {
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-form-label">Product Name</label>
+                        <label class="col-form-label">{t('Product Name')}</label>
                         <Select
                             styles={customStyles}
                             options={productList}
@@ -365,7 +368,7 @@ function Form() {
                         </div> */}
                     </div>
                     <div class="row mb-3">
-                        <label class="col-form-label">Lot Number</label>
+                        <label class="col-form-label">{t('Lot Number')}</label>
                         <Select
                             styles={customStyles}
                             options={lotNoList}
@@ -393,7 +396,7 @@ function Form() {
                         disabled={isLoading || !productValue || !lotNoValue}
                         onClick={!isLoading ? handleClick : null}
                     >
-                        {isLoading ? 'Loading…' : 'Submit'}
+                        {isLoading ? 'Loading…' : t('Submit')}
                     </Button>
                 </div>
             </div>
