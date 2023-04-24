@@ -15,6 +15,8 @@ const customStyles = {
 function Form() {
     const { t } = useTranslation();
 
+    const [COAList, setCOAList] = useState([]);
+
     const [productList, setProductList] = useState([]);
     const [productValue, setProductValue] = useState(0);
 
@@ -28,13 +30,22 @@ function Form() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
+        fetch("v1/api/refresh")
+            .then((res) => res.json())
+            .then((data) => setCOAList(data))
+            .catch(error => {
+                setErrorMessage(error.toString())
+            })
+    }, [])
+
+    useEffect(() => {
         fetch("v1/api/products")
             .then((res) => res.json())
             .then((data) => setProductList(data))
             .catch(error => {
                 setErrorMessage(error.toString())
             })
-    }, [])
+    }, [COAList])
 
     useEffect(() => {
         fetch("/v1/api/lotnos")
@@ -43,7 +54,7 @@ function Form() {
             .catch(error => {
                 setErrorMessage(error.toString())
             })
-    }, [])
+    }, [COAList])
 
     const handleClick = () => {
         setLoading(true)

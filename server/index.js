@@ -89,8 +89,15 @@ app.post('/v1/api/search/', (req, res) => {
     }
 })
 
-app.get('/v1/api/products', (req, res) => {
+app.get('/v1/api/refresh', (req, res) => {
+    const allFiles = getAllFiles(`/data/${org}`); // remote
+    //const allFiles = getAllFiles(path.join(__dirname, '../data')); // local
+    res.setHeader('Content-Type', 'application/json');
+    res.writeHead(200);
+    res.end(JSON.stringify(allFiles, null, 3));
+})
 
+app.get('/v1/api/products', (req, res) => {
     let result = [];
     for (i = 0; i < data.length; i++) {
         if (!result.includes(data[i].product)) {
@@ -109,7 +116,6 @@ app.get('/v1/api/products', (req, res) => {
 })
 
 app.get('/v1/api/lotnos', (req, res) => {
-
     let result = [];
     for (i = 0; i < data.length; i++) {
         result.push({ value: data[i].lot_no, label: data[i].lot_no });
