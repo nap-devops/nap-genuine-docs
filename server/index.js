@@ -67,7 +67,17 @@ app.get('/api/download2/:fileName', function (req, res) {
 })
 
 app.post('/v1/api/download/', function (req, res) {
-    res.download(req.body.filePath);
+
+    // Prevent path traversal
+    let safePath = path.normalize(req.body.filePath).replace(/^(\.\.(\/|\\|$))+/, '');
+    console.log(safePath);
+
+    // Prevent NULL byte injection
+    if (safePath.indexOf('\0') !== -1) {
+        res.status(500).json({ message: 'Access denied' })
+    }
+
+    res.download(safePath);
 })
 
 app.post('/v1/api/search/', (req, res) => {
@@ -139,7 +149,7 @@ app.listen(3030, () => {
     console.log('server start on port 3030');
     console.log("ENV org: " + org);
     //const allFiles = getAllFiles(path.join(__dirname, '../data')); // local
-    const allFiles = getAllFiles(`/data/${org}`);   // remote
-    console.log("List all COA");
-    console.log(allFiles);
+    //const allFiles = getAllFiles(`/data/${org}`);   // remote
+    //console.log("List all COA");
+    //console.log(allFiles);
 });
