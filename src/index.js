@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './i18n';
 
 import './fonts/Kanit/Kanit-Medium.ttf';
 import './fonts/Prompt/Prompt-Medium.ttf';
