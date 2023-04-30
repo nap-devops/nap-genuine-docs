@@ -21,6 +21,7 @@ function Form() {
     const [productValue, setProductValue] = useState(0);
 
     const [lotNoList, setLotNoList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
     const [lotNoValue, setLotNoValue] = useState(0);
 
     const [isLoading, setLoading] = useState(false);
@@ -50,7 +51,7 @@ function Form() {
     useEffect(() => {
         fetch("/v1/api/lotnos")
             .then((res) => res.json())
-            .then((data) => setLotNoList(data))
+            .then((data) => { setLotNoList(data); setFilteredList(data)})
             .catch(error => {
                 setErrorMessage(error.toString())
             })
@@ -107,6 +108,21 @@ function Form() {
             })
     }
 
+    const handleProductListChange = (option) => {
+        setFilteredList([]);
+        const result = lotNoList.filter((obj) => {
+            return obj.product === option?.value;
+         });
+         console.log(result);
+         setProductValue(option?.value);
+         setFilteredList(result);
+    }
+
+    const handleLotNoListChange = (option) => {
+        console.log(option);
+        setLotNoValue(option?.value);
+    }
+
     const downloadFile = (event) => {
         event.preventDefault()
         //setLoading(true)
@@ -141,9 +157,10 @@ function Form() {
                         <Select
                             styles={customStyles}
                             options={productList}
+                            isClearable={true}
                             onChange={(choice) => {
                                 setCOAFound(true)
-                                setProductValue(choice.value)
+                                handleProductListChange(choice)
                             }}
                         />
                     </div>
@@ -151,10 +168,11 @@ function Form() {
                         <label class="col-form-label">{t('Lot Number')}</label>
                         <Select
                             styles={customStyles}
-                            options={lotNoList}
+                            options={filteredList}
+                            isClearable={true}
                             onChange={(choice) => {
                                 setCOAFound(true)
-                                setLotNoValue(choice.value)
+                                handleLotNoListChange(choice)
                             }}
                         />
                     </div>
