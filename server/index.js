@@ -11,7 +11,7 @@ app.use(express.static(buildPath));
 
 const fs = require('fs');
 
-const data = [];
+let data = [];
 const lotNoList = [];
 
 const getAllFiles = function (dirPath, arrayOfFiles) {
@@ -100,6 +100,8 @@ app.post('/v1/api/search/', (req, res) => {
 })
 
 app.get('/v1/api/refresh', (req, res) => {
+    
+    data = [];
     const allFiles = getAllFiles(`/data/${org}`); // remote
     //const allFiles = getAllFiles(path.join(__dirname, '../data')); // local
 
@@ -134,7 +136,7 @@ app.get('/v1/api/products', (req, res) => {
 app.get('/v1/api/lotnos', (req, res) => {
     let result = [];
     for (i = 0; i < data.length; i++) {
-        result.push({ value: data[i].lot_no, label: data[i].lot_no });
+        result.push({ value: data[i].lot_no, label: data[i].lot_no, product: data[i].product, category: data[i].category, type: data[i].type });
     }
     res.setHeader('Content-Type', 'application/json');
     res.writeHead(200);
