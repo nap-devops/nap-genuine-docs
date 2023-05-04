@@ -12,4 +12,5 @@ To change theme<br>
 Add theme=aldamex or theme=napbiotec as url parameters ex https://docs.genuine-dev.napbiotec.io/?theme=aldamex
 
 To directly download PDF file, using the following link format<br>
-https://domain/napbiotec/product/lot-number Ex https://docs.genuine-dev.napbiotec.io/napbiotec/Ginger/A2212002
+https://domain/napbiotec/product/lot-number<br>
+https://docs.genuine-dev.napbiotec.io/napbiotec/Ginger/A2212002
