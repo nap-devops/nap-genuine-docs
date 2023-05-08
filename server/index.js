@@ -66,6 +66,32 @@ app.get('/api/download2/:fileName', function (req, res) {
 
 })
 
+app.get('/napbiotec/:product/:lotNo', function (req, res) {
+
+    const allFiles = getAllFiles(`/data/${org}`); // remote
+    //const allFiles = getAllFiles(path.join(__dirname, '../data')); // local
+
+    let product = req.params.product;
+    console.log(product);
+
+    let lotNo = req.params.lotNo;
+    console.log(lotNo);
+
+    let result = data.filter(item => {
+        return item.product === product && item.lot_no === lotNo;
+    });
+
+    if(result.length === 0){
+      res.status(404).send();
+    } else {
+        fs.readFile(result[0].file, function (err, data) {
+            console.log(data);
+            res.contentType('application/pdf');
+            res.send(data);
+        });
+    }
+})
+
 app.post('/v1/api/download/', function (req, res) {
 
     // Prevent path traversal
