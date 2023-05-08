@@ -74,29 +74,43 @@ function Form() {
 
                 setLoading(false)
                 console.log(data.length);
+                console.log(data);
 
                 if (data.length > 0) {
-                    fetch('/v1/api/download', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ filePath: data[0].file })
+
+                    const a = document.createElement('a')
+                    a.target = '_blank'
+                    a.href =  `/napbiotec/${data[0].product}/${data[0].lot_no}`;
+                    const clickEvent = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true,
                     })
-                        .then((response) => response.blob())
-                        .then((blob) => {
-                            const a = document.createElement('a')
-                            a.target = '_blank'
-                            a.href = URL.createObjectURL(blob)
-                            const clickEvent = new MouseEvent('click', {
-                                view: window,
-                                bubbles: true,
-                                cancelable: true,
-                            })
-                            a.dispatchEvent(clickEvent)
-                            a.remove()
-                        })
-                        .catch(error => {
-                            setErrorMessage(error.toString());
-                        })
+                    a.dispatchEvent(clickEvent)
+                    a.remove()
+
+                    // fetch('/v1/api/download', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({ filePath: data[0].file })
+                    // })
+                    //     .then((response) => response.blob())
+                    //     .then((blob) => {
+                    //         const a = document.createElement('a')
+                    //         a.target = '_blank'
+                    //         a.href = URL.createObjectURL(blob)
+                    //         const clickEvent = new MouseEvent('click', {
+                    //             view: window,
+                    //             bubbles: true,
+                    //             cancelable: true,
+                    //         })
+                    //         a.dispatchEvent(clickEvent)
+                    //         a.remove()
+                    //     })
+                    //     .catch(error => {
+                    //         setErrorMessage(error.toString());
+                    //     })
+                    
                 } else {
                     setCOAFound(false);
                     setMessage(`Not Found COA for ${productValue}, ${lotNoValue}`);
