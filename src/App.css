@@ -18,26 +18,9 @@
   --btn-color: #fff;
 }
 
-/* body,
-html {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-} */
-
-/* .App {
-  text-align: center;
+#app {
+  overflow: hidden;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
 
 .App-header {
   min-height: 100vh;
@@ -47,20 +30,6 @@ html {
   justify-content: center;
   /* font-size: calc(10px + 2vmin);*/
 }
-
-/* .App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
 select {
   width: 100%;
@@ -92,4 +61,8 @@ select {
 .btn:active {
   background-color: var(--btn-bg);
   color: var(--btn-color);
+}
+
+.btn:disabled{
+  background-color: var(--btn-bg);
 }
