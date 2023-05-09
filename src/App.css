@@ -18,6 +18,10 @@
   --btn-color: #fff;
 }
 
+#app {
+  overflow: hidden;
+}
+
 .App-header {
   min-height: 100vh;
   display: flex;
